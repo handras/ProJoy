@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 14
-  productGUID: a669b67199d752b4388c86e3c225a986
+  productGUID: 5eb54d9d0886ac44290d0d516606cb96
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   defaultScreenOrientation: 4
@@ -634,8 +634,8 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 028e24dc-ca60-4b8c-9983-bd50bb4b3239
-  projectName: ProJoy (1)
+  cloudProjectId: 5980d9fc-22bf-4968-8f50-204341affe59
+  projectName: ProJoy (2)
   organizationId: handris
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
