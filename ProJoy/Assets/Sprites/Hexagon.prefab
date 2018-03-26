@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4287769057958008}
   - component: {fileID: 212940838584326402}
+  - component: {fileID: 60009941851102114}
   m_Layer: 0
   m_Name: Hexagon-graphic
   m_TagString: Untagged
@@ -62,13 +63,45 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764969780045662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 17.428282, y: 3.8806636, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4287769057958008}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &60009941851102114
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1576052312674006}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.72, y: 3.14}
+    newSize: {x: 2.72, y: 3.14}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 1.36, y: -0.79679376}
+      - {x: 1.36, y: 0.8053317}
+      - {x: 0.028184203, y: 1.5699999}
+      - {x: -0.035457306, y: 1.5699999}
+      - {x: -1.36, y: 0.81}
+      - {x: -1.36, y: -0.80160606}
+      - {x: -0.031389616, y: -1.5699999}
+      - {x: 0.028526459, y: -1.5699999}
 --- !u!212 &212940838584326402
 SpriteRenderer:
   m_ObjectHideFlags: 1
