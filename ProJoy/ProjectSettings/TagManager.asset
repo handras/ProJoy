@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hexes
+    uniqueID: 4223595437
+    locked: 0
+  - name: Borders
+    uniqueID: 1821086441
+    locked: 0
+  - name: Characters
+    uniqueID: 792261379
+    locked: 0

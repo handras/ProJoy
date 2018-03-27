@@ -6,7 +6,14 @@ public class InputManager : MonoBehaviour {
 
     [Range(0, 50)]
     public float CameraSpeed;
-    
+
+    public float CameraZoomSpeed = .5f;
+    [Tooltip("The lower the value the \"closer down\" the camera can get")]
+    public float CameraZoomMin = 1.25f;
+    [Tooltip("The higher the value the \"further up\" the camera can get")]
+    public float CameraZoomMax = 10f;
+
+
     Vector3 lastPosition;
     Camera theCamera;
 
@@ -29,6 +36,25 @@ public class InputManager : MonoBehaviour {
             Vector3 diff = lastPosition - mouseWorldPosition;
             theCamera.transform.Translate(diff*Time.deltaTime*CameraSpeed, Space.World);
             //lastPosition = mouseWorldPosition;
+        }
+
+        if (Input.touchCount == 2)
+        {
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = Input.GetTouch(1);
+
+            Vector2 prev1 = touch1.position - touch1.deltaPosition;
+            Vector2 prev2 = touch2.position - touch2.deltaPosition;
+
+            float prevDistance = (prev1 - prev2).magnitude;
+            float currDistance = (touch1.position - touch2.position).magnitude;
+
+            float distanceDelta = prevDistance - currDistance;
+            Debug.Log(distanceDelta);
+
+            theCamera.orthographicSize += distanceDelta * CameraZoomSpeed;
+            theCamera.orthographicSize = Mathf.Clamp(theCamera.orthographicSize, CameraZoomMin, CameraZoomMax);
+
         }
     }
 }
