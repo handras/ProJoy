@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour {
 
-    public GameObject HexagonPrefab;
-    public GameObject HexagonBorderPrefab;
+    public HexTile hexTilePrefab;
 
     HexTile[,] map;
 
@@ -18,9 +17,9 @@ public class Map : MonoBehaviour {
         {
             for (int j = 0; j< height; j++)
             {
-                HexTile h = new HexTile(i, j);
+                HexTile h = Instantiate(hexTilePrefab, this.transform);
                 map[i, j] = h;
-                h.Create(HexagonPrefab, HexagonBorderPrefab, this);
+                h.Create(i, j);
             }
         }
 

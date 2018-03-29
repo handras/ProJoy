@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HexTile {
-    
+public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
+
+    //public GameObject HexagonPrefab, HexagonBorderPrefab;
+    public Color HexBaseColor, HexMouseOverColorTint, hexBorderSelectedColor;
+
     private GameObject hexagon, hexagonBorder;
     private SpriteRenderer hexagonSpriteRenderer, hexagonborderSpriteRenderer;
 
@@ -12,25 +15,24 @@ public class HexTile {
     private static float width = Mathf.Sqrt(3) / 2 * height;
 
     //cubic coordinates
-    private int q, r, s;
-
-    private Color baseColor = new Color(1f, 1f, 1f) ;
-    private Color mouseOverColor = new Color(0.2f, 0.2f, 0.2f);    
+    private int q, r, s;    
     
-	public HexTile(int col, int row) {
+    public void Create(int col, int row)
+    {
         q = col;
         r = row;
-        s = -q - r;        
-	}
+        s = -q - r;
 
-    public void Create(GameObject HexagonPrefab, GameObject HexagonBorderPrefab, Map map)
-    {
         Vector2 pos =  new Vector2(width*(q+r/2f), height*r*0.75f);
-        hexagon = Object.Instantiate(HexagonPrefab, pos, Quaternion.identity, map.transform);
-        hexagonBorder = Object.Instantiate(HexagonBorderPrefab, pos, Quaternion.identity, map.transform);
+        transform.position = pos;
+
+        hexagon = transform.Find("Hexagon").gameObject;
+        hexagonBorder = transform.Find("Hexagon-border").gameObject;
 
         hexagonSpriteRenderer = hexagon.GetComponentInChildren<SpriteRenderer>();
         hexagonborderSpriteRenderer = hexagonBorder.GetComponentInChildren<SpriteRenderer>();
+
+        hexagonSpriteRenderer.color = HexBaseColor;
     }
 
     void OnTrigger()
@@ -38,12 +40,14 @@ public class HexTile {
         Debug.Log("HexTile triggered");
     }
 
-    public void PointerEnter() {
-        hexagonSpriteRenderer.color = mouseOverColor;
+    public void OnPointerEnter(PointerEventData ed) {
+        Debug.Log("HexTile OnPointerEnter event");
+        hexagonSpriteRenderer.color = Color.Lerp(HexBaseColor, HexMouseOverColorTint, 0.5f);
     }
 
-    public void PointerExit()
+    public void OnPointerExit(PointerEventData ed)
     {
-        hexagonSpriteRenderer.color = baseColor;
+        Debug.Log("HexTile OnPointerExit event");
+        hexagonSpriteRenderer.color = HexBaseColor;
     }
 }
