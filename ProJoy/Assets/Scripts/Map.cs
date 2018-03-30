@@ -28,6 +28,12 @@ public class Map : MonoBehaviour {
 
     public void SelectTile(HexTile h)
     {
+        if(selectedTile == h)
+        {
+            h.Deselect();
+            selectedTile = null;
+            return;
+        }
         if(selectedTile != null)
         {
             selectedTile.Deselect();
