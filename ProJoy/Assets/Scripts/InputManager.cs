@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour {
     [Tooltip("The higher the value the \"further up\" the camera can get")]
     public float CameraZoomMax = 10f;
 
+    Map map;
 
     Vector3 lastPosition;
     Camera theCamera;
@@ -20,9 +21,10 @@ public class InputManager : MonoBehaviour {
     private void Start()
     {
         theCamera = Camera.main;
+        map = GameObject.Find("Map").GetComponent<Map>();
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -54,7 +56,18 @@ public class InputManager : MonoBehaviour {
 
             theCamera.orthographicSize += distanceDelta * CameraZoomSpeed;
             theCamera.orthographicSize = Mathf.Clamp(theCamera.orthographicSize, CameraZoomMin, CameraZoomMax);
-
         }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Vector2 pos = theCamera.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hitInfo = Physics2D.Raycast(pos, Vector2.zero);
+            if (hitInfo.collider != null)
+            {
+                HexTile h = hitInfo.collider.gameObject.GetComponentInParent<HexTile>();
+                map.SelectTile(h);
+            }
+        }
+
     }
 }

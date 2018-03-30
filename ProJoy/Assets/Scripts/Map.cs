@@ -5,8 +5,9 @@ using UnityEngine;
 public class Map : MonoBehaviour {
 
     public HexTile hexTilePrefab;
-
+    
     HexTile[,] map;
+    private HexTile selectedTile;
 
     int width = 15;
     int height = 15;
@@ -24,6 +25,16 @@ public class Map : MonoBehaviour {
         }
 
 	}
+
+    public void SelectTile(HexTile h)
+    {
+        if(selectedTile != null)
+        {
+            selectedTile.Deselect();
+        }
+        selectedTile = h;
+        h.Select();
+    }
 	
 	void Update () {
 		

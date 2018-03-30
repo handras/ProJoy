@@ -35,6 +35,12 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
         hexagonSpriteRenderer.color = HexBaseColor;
     }
 
+    public void getMapIndices(out int col, out int row)
+    {
+        col = q;
+        row = r;
+    }
+
     void OnTrigger()
     {
         Debug.Log("HexTile triggered");
@@ -49,5 +55,15 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     {
         Debug.Log("HexTile OnPointerExit event");
         hexagonSpriteRenderer.color = HexBaseColor;
+    }
+
+    public void Select()
+    {
+        hexagonborderSpriteRenderer.color = hexBorderSelectedColor;
+    }
+
+    public void Deselect()
+    {
+        hexagonborderSpriteRenderer.color = Color.black;
     }
 }
