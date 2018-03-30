@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour {
 
-    public HexTile hexTilePrefab;
+    public MapData mapData;
     
     HexTile[,] map;
     private HexTile selectedTile;
@@ -13,6 +13,7 @@ public class Map : MonoBehaviour {
     int height = 15;
     
 	void Start () {
+        HexTile hexTilePrefab = mapData.hexTilePrefab;
         map = new HexTile[width, height];
         for (int i = 0; i < width; i++)
         {

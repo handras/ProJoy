@@ -15,7 +15,18 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     private static float width = Mathf.Sqrt(3) / 2 * height;
 
     //cubic coordinates
-    private int q, r, s;    
+    private int q, r, s;
+
+    private Player _owner;
+    public Player Owner {
+        get { return _owner; }
+        set {
+            _owner = value;
+            HexBaseColor = value.color;
+            hexagonSpriteRenderer.color = HexBaseColor;
+        }
+    }
+    private MapObject mapObject;
     
     public void Create(int col, int row)
     {
