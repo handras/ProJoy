@@ -40,6 +40,32 @@ public class Map : MonoBehaviour {
         }
         selectedTile = h;
         h.Select();
+
+        foreach(HexTile nh in GetNeighbours(h))
+        {
+            if (nh == null)
+                continue;
+            nh.OnPointerEnter(null);
+        }
+    }
+
+    public HexTile[] GetNeighbours(HexTile h)
+    {
+        HexTile[] neighbours = new HexTile[6];
+        Vector2Int[] neighbourCoordinates = h.Neighbours;
+        for (int i=0; i<6; i++)
+        {
+            int ni = neighbourCoordinates[i].x;
+            int nj = neighbourCoordinates[i].y;
+            try
+            {
+                neighbours[i] = map[ni, nj];
+            } catch (System.IndexOutOfRangeException)
+            {
+                neighbours[i] = null;
+            }
+        }
+        return neighbours;
     }
 	
 	void Update () {

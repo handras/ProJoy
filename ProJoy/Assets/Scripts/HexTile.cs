@@ -41,6 +41,31 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
         row = r;
     }
 
+    private Vector2Int[]  _neighbours;
+    public Vector2Int[] Neighbours
+    {
+        get
+        {
+            if (_neighbours == null)
+                calculateNeighours();
+            return _neighbours;
+        }
+        private set { }
+    }
+
+    private readonly static Vector2Int[] neighbourDirections = {
+        new Vector2Int(+1,  0), new Vector2Int(+1, -1), new Vector2Int( 0, -1),
+        new Vector2Int(-1,  0), new Vector2Int(-1, +1), new Vector2Int( 0, +1)
+    };
+    private void calculateNeighours()
+    {
+        _neighbours = new Vector2Int[6];
+        for(int i = 0; i<6; i++)
+        {
+            _neighbours[i] = new Vector2Int(q, r) + neighbourDirections[i];
+        }
+    }
+
     void OnTrigger()
     {
         Debug.Log("HexTile triggered");
