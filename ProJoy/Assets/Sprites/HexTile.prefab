@@ -202,9 +202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce4d7f6590c683a44bfc0f66e2759a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HexBaseColor: {r: 0.63235295, g: 0.15808824, b: 0.15808824, a: 1}
-  HexMouseOverColorTint: {r: 0.58823526, g: 0.58823526, b: 0.58823526, a: 1}
-  hexBorderSelectedColor: {r: 0.9191176, g: 0.946, b: 0.02200003, a: 1}
+  HexBaseColor: {r: 1, g: 1, b: 1, a: 1}
+  HexMouseOverColorTint: {r: 0.60294116, g: 0.60294116, b: 0.60294116, a: 1}
+  hexBorderSelectedColor: {r: 0.14424738, g: 0.85294116, b: 0.2186687, a: 1}
 --- !u!212 &212073949905053754
 SpriteRenderer:
   m_ObjectHideFlags: 1

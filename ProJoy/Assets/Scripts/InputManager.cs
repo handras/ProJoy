@@ -7,15 +7,15 @@ public class InputManager : MonoBehaviour {
     [Range(0, 50)]
     public float CameraSpeed;
 
-    public float CameraZoomSpeed = .5f;
+    public float CameraZoomSpeed;
 
     [Tooltip("The lower the value the \"closer down\" the camera can get")]
-    public float CameraZoomMin = 1.25f;
+    public float CameraZoomMin;
 
     [Tooltip("The higher the value the \"further up\" the camera can get")]
-    public float CameraZoomMax = 10f;
+    public float CameraZoomMax;
 
-    public int dragTreshold = 50;
+    public int dragTreshold;
 
     Map map;
 
