@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
+public class HexTile : MonoBehaviour {
 
     //public GameObject HexagonPrefab, HexagonBorderPrefab;
     public Color HexBaseColor, HexMouseOverColorTint, hexBorderSelectedColor;
@@ -13,7 +13,7 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
 
     private static float height = 2.30862f;
     private static float width = Mathf.Sqrt(3) / 2 * height;
-
+    
     //cubic coordinates
     private int q, r, s;
 
@@ -26,15 +26,15 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
             hexagonSpriteRenderer.color = HexBaseColor;
         }
     }
-    private MapObject mapObject;
-    
+    public MapObject mapObject;
+
     public void Create(int col, int row)
     {
         q = col;
         r = row;
         s = -q - r;
 
-        Vector2 pos =  new Vector2(width*(q+r/2f), height*r*0.75f);
+        Vector2 pos = new Vector2(width * (q + r / 2f), height * r * 0.75f);
         transform.position = pos;
 
         hexagon = transform.Find("Hexagon").gameObject;
@@ -52,7 +52,7 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
         row = r;
     }
 
-    private Vector2Int[]  _neighbours;
+    private Vector2Int[] _neighbours;
     public Vector2Int[] Neighbours
     {
         get
@@ -71,7 +71,7 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     private void calculateNeighours()
     {
         _neighbours = new Vector2Int[6];
-        for(int i = 0; i<6; i++)
+        for (int i = 0; i < 6; i++)
         {
             _neighbours[i] = new Vector2Int(q, r) + neighbourDirections[i];
         }
@@ -80,17 +80,6 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     void OnTrigger()
     {
         Debug.Log("HexTile triggered");
-    }
-
-    public void OnPointerEnter(PointerEventData ed) {
-        Debug.Log("HexTile OnPointerEnter event");
-        hexagonSpriteRenderer.color = Color.Lerp(HexBaseColor, HexMouseOverColorTint, 0.5f);
-    }
-
-    public void OnPointerExit(PointerEventData ed)
-    {
-        Debug.Log("HexTile OnPointerExit event");
-        hexagonSpriteRenderer.color = HexBaseColor;
     }
 
     public void Select()
@@ -102,4 +91,24 @@ public class HexTile : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     {
         hexagonborderSpriteRenderer.color = Color.black;
     }
+
+    // call this to indicate this tile is neighbouring to a tile which owner has playerColor
+    public void Highlight(Color playerColor)
+    {
+        if (HexBaseColor.Equals(playerColor))
+        {
+            hexagonSpriteRenderer.color = Color.Lerp(Color.white, playerColor, 0.8f);
+        }
+        else
+        {
+            hexagonSpriteRenderer.color = Color.Lerp(HexBaseColor, playerColor, 0.2f);
+        }
+    }
+
+    // with no parameter it ends the highlight
+    public void Highlight()
+    {
+        hexagonSpriteRenderer.color = HexBaseColor;
+    }
+
 }

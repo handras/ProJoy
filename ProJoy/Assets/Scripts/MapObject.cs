@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapObject : MonoBehaviour {
+public class MapObject  {
+
+    public int MoveRange;
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +15,12 @@ public class MapObject : MonoBehaviour {
 	void Update () {
 		
 	}
+}
+
+public class Unit : MapObject
+{
+    public Unit()
+    {
+        MoveRange = 2;
+    }
 }

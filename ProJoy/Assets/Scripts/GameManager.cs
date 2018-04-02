@@ -15,10 +15,17 @@ public class GameManager : MonoBehaviour {
         addPlayer();
 
         // name is important as other scripts search it
+        Debug.Log("creating map GO");
         GameObject mapGO = new GameObject("Map");
+        Debug.Log("adding map component");
         Map map = mapGO.AddComponent<Map>();
         map.mapData = mapData;
-	}
+        map.GenerateMap();
+
+        Debug.Log("players occupying");
+        map.OccupyTile(2, 2, players[0]);
+        map.OccupyTile(9, 9, players[1]);
+    }
 	
 	void Update () {
 		
