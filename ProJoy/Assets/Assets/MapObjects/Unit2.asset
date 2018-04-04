@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744eafe7f2b2dbe44b91e44ddfb9989a, type: 3}
   m_Name: Unit2
   m_EditorClassIdentifier: 
-  MoveRange: 0
-  Cost: 0
-  gameobject: {fileID: 0}
+  MoveRange: 5
+  Cost: 8
+  gameobject: {fileID: 1723458199775622, guid: 5c2cf4b9a847c174985c1b304e11c17d, type: 2}

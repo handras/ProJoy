@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 744eafe7f2b2dbe44b91e44ddfb9989a, type: 3}
-  m_Name: Unit2
+  m_Name: Unit3
   m_EditorClassIdentifier: 
-  MoveRange: 0
-  Cost: 0
-  gameobject: {fileID: 0}
+  MoveRange: 8
+  Cost: 16
+  gameobject: {fileID: 1853229921272590, guid: 3f9666ba645b2784eb84ddb77c619e22, type: 2}
