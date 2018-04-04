@@ -112,20 +112,18 @@ public class Map : MonoBehaviour {
         for (int i = 0; i < 6; i++)
         {
             HexTile neighbour = neighbours[i];
-            if (neighbour == null)
+            if (neighbour == null /*|| results.Contains(neighbour)*/)
                 continue;
-            // any unit can only move 1 tile outside of his motherland
-            if (neighbour.Owner != original.Owner)
-            {
-                deepness = unit.MoveRange;
-            }
-            results.Add(neighbour);
             neighbour.Highlight(color);
+            results.Add(neighbour);
             // recursive call
             if (unit.MoveRange > deepness+1)
             {
-                Debug.Log("move range: " + unit.MoveRange + " deepness: " + deepness);
-                calculateValidMoves(neighbour, original, deepness + 1, ref results);
+                // any unit can only move 1 tile outside of his motherland
+                if (neighbour.Owner == original.Owner)
+                {
+                    calculateValidMoves(neighbour, original, deepness + 1, ref results);
+                }
             }
         }
     }
@@ -158,11 +156,15 @@ public class Map : MonoBehaviour {
 
     // makes the tile belonging to player if he can occupy it
     // this overload is for map initialization, it places a simple unit to this tile
-    public bool OccupyTile(int i, int j, Player player)
+    public bool OccupyTile(int i, int j, Player player, MapObjectData unitData=null)
     {
         HexTile h = map[i, j];
         h.Owner=player;
-        h.mapObject = new Unit();
+        if (unitData != null)
+        {
+            MapObject unit = new MapObject(unitData, h);
+            h.mapObject = unit;
+        }
         return true;
     }
 

@@ -5,22 +5,14 @@ using UnityEngine;
 public class MapObject  {
 
     public int MoveRange;
+    public int Cost;
+    public GameObject Prefab;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-}
-
-public class Unit : MapObject
-{
-    public Unit()
+    public MapObject(MapObjectData data, HexTile hex)
     {
-        MoveRange = 2;
+        MoveRange = data.MoveRange;
+        Cost = data.Cost;
+
+        Prefab = GameObject.Instantiate(data.gameobject, hex.transform);
     }
 }

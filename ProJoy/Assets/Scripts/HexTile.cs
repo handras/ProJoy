@@ -26,16 +26,27 @@ public class HexTile : MonoBehaviour {
             hexagonSpriteRenderer.color = HexBaseColor;
         }
     }
-    public MapObject mapObject;
+    private MapObject _mapObject;
+    public MapObject mapObject
+    {
+        get { return _mapObject; }
+        set
+        {
+            _mapObject = value;
+            if (_mapObject != null)
+            {
+                _mapObject.Prefab.transform.position = getPosition();
+            }
+        }
+    }
 
     public void Create(int col, int row)
     {
         q = col;
         r = row;
         s = -q - r;
-
-        Vector2 pos = new Vector2(width * (q + r / 2f), height * r * 0.75f);
-        transform.position = pos;
+ 
+        transform.position = getPosition();
 
         hexagon = transform.Find("Hexagon").gameObject;
         hexagonBorder = transform.Find("Hexagon-border").gameObject;
@@ -44,6 +55,11 @@ public class HexTile : MonoBehaviour {
         hexagonborderSpriteRenderer = hexagonBorder.GetComponentInChildren<SpriteRenderer>();
 
         hexagonSpriteRenderer.color = HexBaseColor;
+    }
+
+    private Vector2 getPosition()
+    {
+        return new Vector2(width * (q + r / 2f), height * r * 0.75f);
     }
 
     public void getMapIndices(out int col, out int row)
