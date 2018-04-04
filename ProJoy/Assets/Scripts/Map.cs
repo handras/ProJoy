@@ -175,6 +175,10 @@ public class Map : MonoBehaviour {
         if (_highlightedTiles.Contains(attackDest))
         {
             // the source mapObject moves to the dest tile
+            if (attackDest.mapObject != null)
+            {
+                Destroy(attackDest.mapObject.Prefab);
+            }
             attackDest.mapObject = attackSource.mapObject;
             attackSource.mapObject = null;
             // tile ownership update
