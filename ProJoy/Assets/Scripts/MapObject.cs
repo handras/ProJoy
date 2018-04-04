@@ -8,11 +8,11 @@ public class MapObject  {
     public int Cost;
     public GameObject Prefab;
 
-    public MapObject(MapObjectData data, HexTile hex)
+    public MapObject(MapObjectData data)
     {
         MoveRange = data.MoveRange;
         Cost = data.Cost;
 
-        Prefab = GameObject.Instantiate(data.gameobject, hex.transform);
+        Prefab = GameObject.Instantiate(data.gameobject, GameObject.Find("Map").transform);
     }
 }

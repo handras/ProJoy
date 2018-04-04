@@ -162,7 +162,7 @@ public class Map : MonoBehaviour {
         h.Owner=player;
         if (unitData != null)
         {
-            MapObject unit = new MapObject(unitData, h);
+            MapObject unit = new MapObject(unitData);
             h.mapObject = unit;
         }
         return true;
