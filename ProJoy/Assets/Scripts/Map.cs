@@ -46,6 +46,7 @@ public class Map : MonoBehaviour {
             for (int j = 0; j < height; j++)
             {
                 HexTile h = Instantiate(hexTilePrefab, this.transform);
+                h.transform.name = "HexTile (" + i + ", " + j+")";
                 map[i, j] = h;
                 h.Create(i, j);
             }
@@ -98,35 +99,82 @@ public class Map : MonoBehaviour {
         }      
     }
 
+    int recursiveSteps;
     private List<HexTile> calculateValidMoves(HexTile from)
     {
+        recursiveSteps = 0;
         List<HexTile> hexes = new List<HexTile>();
-        calculateValidMoves(from, from, 0, ref hexes);
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+        Queue<HexTile> q = new Queue<HexTile>();
+        q.Enqueue(from);
+        calculateValidMoves(q, from, 0, ref hexes);
+        watch.Stop();
+        Debug.Log("Recursive steps taken " + recursiveSteps+ " time "+watch.ElapsedMilliseconds);
         return hexes;
     }
-    private void calculateValidMoves(HexTile current, HexTile original, int deepness, ref List<HexTile> results)
+    private void calculateValidMoves(Queue<HexTile> q, HexTile original, int deepness, ref List<HexTile> results)
     {
-        Color color = original.Owner.color;
-        MapObject unit = original.mapObject;
-        HexTile[] neighbours = GetNeighbours(current);
-        for (int i = 0; i < 6; i++)
+        recursiveSteps++;
+        Queue<HexTile> nextq = new Queue<HexTile>();
+        HexTile current;
+        while (q.Count > 0)
         {
-            HexTile neighbour = neighbours[i];
-            if (neighbour == null /*|| results.Contains(neighbour)*/)
-                continue;
-            neighbour.Highlight(color);
-            results.Add(neighbour);
-            // recursive call
-            if (unit.MoveRange > deepness+1)
+            current = q.Dequeue();
+            results.Add(current);
+            current.Highlight(original.Owner.color);
+            foreach (var nh in GetNeighbours(current))
             {
-                // any unit can only move 1 tile outside of his motherland
-                if (neighbour.Owner == original.Owner)
+                if (nh != null && !results.Contains(nh)
+                     && deepness < original.mapObject.MoveRange+1
+                    /*&& current.Owner == original.Owner*/)
                 {
-                    calculateValidMoves(neighbour, original, deepness + 1, ref results);
+                    drawArrowBetweenTiles(current, nh);
+                    nextq.Enqueue(nh);
                 }
             }
+            calculateValidMoves(nextq, original, deepness + 1, ref results);
         }
     }
+
+    private void drawArrowBetweenTiles(HexTile a, HexTile b)
+    {
+        Vector3 posa = a.transform.position;
+        Vector3 posb = b.transform.position;
+        Vector3 enda = Vector3.MoveTowards(posa, posb, 0.2f);
+        Vector3 endb = Vector3.MoveTowards(posb, posa, 0.2f);
+        Vector3 direction = endb - enda;
+        Debug.DrawLine(enda, endb, Color.black, Mathf.Infinity);
+
+        Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(180 + 35, 0, 0) * new Vector3(0, 0, .25f);
+        Vector3 left = Quaternion.LookRotation(direction) * Quaternion.Euler(180 - 35, 0, 0) * new Vector3(0, 0, .25f);
+
+        Debug.DrawLine(endb, endb + right, Color.black, Mathf.Infinity);
+        Debug.DrawLine(endb, endb + left, Color.black, Mathf.Infinity);
+    }
+
+
+    //private void calculateValidMoves(HexTile current, HexTile original, int deepness, ref List<HexTile> results)
+    //{
+    //    recursiveSteps++;
+    //    Color color = original.Owner.color;
+    //    MapObject unit = original.mapObject;
+    //    HexTile[] neighbours = GetNeighbours(current);
+    //    for (int i = 0; i < 6; i++)
+    //    {
+    //        HexTile neighbour = neighbours[i];
+    //        if (neighbour == null || results.Contains(neighbour))
+    //            continue;
+    //        neighbour.Highlight(color);
+    //        results.Add(neighbour);
+    //        // any unit can only move 1 tile outside of his motherland
+    //        // that 1 tile is what was just added to results
+    //        if (unit.MoveRange > deepness + 1/* && neighbour.Owner == original.Owner*/)
+    //        {
+    //            // recursive call
+    //            calculateValidMoves(neighbour, original, deepness + 1, ref results);
+    //        }
+    //    }
+    //}
 
     // returns the 6 neighbours of a tile, some might be null on the edges
     public HexTile[] GetNeighbours(HexTile h)
