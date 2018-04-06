@@ -107,32 +107,30 @@ public class Map : MonoBehaviour {
         var watch = System.Diagnostics.Stopwatch.StartNew();
         Queue<HexTile> q = new Queue<HexTile>();
         q.Enqueue(from);
-        calculateValidMoves(q, from, 0, ref hexes);
+        calculateValidMoves(from, ref hexes);
         watch.Stop();
         Debug.Log("Recursive steps taken " + recursiveSteps+ " time "+watch.ElapsedMilliseconds);
         return hexes;
     }
-    private void calculateValidMoves(Queue<HexTile> q, HexTile original, int deepness, ref List<HexTile> results)
+    private void calculateValidMoves( HexTile original, ref List<HexTile> results)
     {
-        recursiveSteps++;
-        Queue<HexTile> nextq = new Queue<HexTile>();
-        HexTile current;
-        while (q.Count > 0)
+        int move = original.mapObject.MoveRange;
+        for (int dx = -move; dx <= move; dx++)
         {
-            current = q.Dequeue();
-            results.Add(current);
-            current.Highlight(original.Owner.color);
-            foreach (var nh in GetNeighbours(current))
+            for (int dy = Mathf.Max(-move, -dx-move); dy <= Mathf.Min(move, -dx+move); dy++)
             {
-                if (nh != null && !results.Contains(nh)
-                     && deepness < original.mapObject.MoveRange+1
-                    /*&& current.Owner == original.Owner*/)
+                recursiveSteps++;
+                Vector2Int coord = HexTile.addCubicCoordinates(original, dx, dy);
+                try
                 {
-                    drawArrowBetweenTiles(current, nh);
-                    nextq.Enqueue(nh);
+                    HexTile tmp = map[coord.x, coord.y];
+                    tmp.Highlight(original.Owner.color);
+                    results.Add(tmp);
+                }
+                catch (System.IndexOutOfRangeException)
+                {
                 }
             }
-            calculateValidMoves(nextq, original, deepness + 1, ref results);
         }
     }
 
