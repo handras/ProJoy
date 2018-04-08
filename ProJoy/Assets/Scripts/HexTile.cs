@@ -13,7 +13,7 @@ public class HexTile : MonoBehaviour {
 
     private static float height = 2.30862f;
     private static float width = Mathf.Sqrt(3) / 2 * height;
-    
+
     //cubic coordinates
     private int q, r, s;
 
@@ -45,7 +45,7 @@ public class HexTile : MonoBehaviour {
         q = col;
         r = row;
         s = -q - r;
- 
+
         transform.position = getPosition();
 
         hexagon = transform.Find("Hexagon").gameObject;
@@ -125,6 +125,17 @@ public class HexTile : MonoBehaviour {
     public void Highlight()
     {
         hexagonSpriteRenderer.color = HexBaseColor;
+    }
+
+    public static int Distance(HexTile a, HexTile b)
+    {
+        return (Mathf.Abs(a.q - b.q) + Mathf.Abs(a.r - b.r) + Mathf.Abs(a.s - b.s)) / 2;
+    }
+
+    public static Vector2Int addCubicCoordinates(HexTile a, int x, int y)
+    {
+        Vector2Int r = new Vector2Int(a.q + x, a.r + y);
+        return r;
     }
 
 }
